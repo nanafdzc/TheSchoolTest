@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheSchool", "TheSchool\TheSchool.csproj", "{CE6C8AEB-7230-433C-A440-0F8DE37EDAD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheSchoolTests", "TheSchoolTests\TheSchoolTests.csproj", "{A2523BA5-53A7-4589-9631-53E0FC39328C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheSchoolTests", "TheSchoolTests\TheSchoolTests.csproj", "{A2523BA5-53A7-4589-9631-53E0FC39328C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSource", "ImageSource\ImageSource.csproj", "{04F67F5F-D242-44AF-8800-2083725C53E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageSource", "ImageSource\ImageSource.csproj", "{04F67F5F-D242-44AF-8800-2083725C53E9}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WisperoDB", "WisperoDB\WisperoDB.sqlproj", "{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,12 @@ Global
 		{04F67F5F-D242-44AF-8800-2083725C53E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04F67F5F-D242-44AF-8800-2083725C53E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04F67F5F-D242-44AF-8800-2083725C53E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B6709F-D4F5-4B4A-9AE3-2BD03022A1B9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
