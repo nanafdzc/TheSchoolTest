@@ -23,7 +23,8 @@ namespace TheSchool.Data
         public void Add(KnowledgeBaseItem entity)
         {
             //TODO: Implement Adding mechanism for KnowledgeBaseItems.
-            throw new NotImplementedException();
+            _context.KnowledgeBaseItems.Add(entity);
+            _context.SaveChanges();
         }
 
         public void CommitChanges()

@@ -28,16 +28,23 @@ namespace TheSchool.Controllers
             //Also create a map from TagItem to TagModel.
             //Use "mapper" attribute which is already defined. More information: https://docs.automapper.org/en/latest/Getting-started.html.
 
-            throw new NotImplementedException();
-
+            var configurationManager = new AutoMapper.MapperConfiguration(
+                cfg => cfg.CreateMap<QuestionAndAnswerModel, KnowledgeBaseItem>()
+                .ForMember(x=>x.Query,  opt=> opt.MapFrom(z=>z.Question))
+                .ForMember(x=>x.LastUpdateOn, opt=>opt.MapFrom(z=> DateTime.Now))
+                );
+            mapper = configurationManager.CreateMapper();
         }
 
         public ActionResult Index()
         {
             //TODO: Return a view "Index" with all the required information for the nested views.
             //You need to call TagHelper.Process as shown below in order to populate the object "HomeViewModel".
-            
-            throw new NotImplementedException();
+            var model = new HomeViewModel();
+            model.QA = new QuestionAndAnswerModel();
+            model.Tags = new TagCloudModel();
+
+            return View("Index", model);
         }
         public ActionResult Entry()
         {
@@ -59,8 +66,15 @@ namespace TheSchool.Controllers
         {
             //TODO: Return partial view "Index" to reload the page.
             //If model is valid then persists the new entry on DB. Make sure  data changes are committed.
-            
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                var entity = mapper.Map<KnowledgeBaseItem>(model);
+                KnowledgeBaseData.Add(entity);
+                KnowledgeBaseData.CommitChanges();
+
+                return RedirectToAction("Index");
+            }
+            return Index();
         }
         public IActionResult Privacy()
         {
