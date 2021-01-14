@@ -29,10 +29,13 @@ namespace TheSchool.Controllers
             //Use "mapper" attribute which is already defined. More information: https://docs.automapper.org/en/latest/Getting-started.html.
 
             var configurationManager = new AutoMapper.MapperConfiguration(
-                cfg => cfg.CreateMap<QuestionAndAnswerModel, KnowledgeBaseItem>()
-                .ForMember(x=>x.Query,  opt=> opt.MapFrom(z=>z.Question))
-                .ForMember(x=>x.LastUpdateOn, opt=>opt.MapFrom(z=> DateTime.Now))
-                );
+                cfg => {
+                    cfg.CreateMap<QuestionAndAnswerModel, KnowledgeBaseItem>()
+                        .ForMember(x => x.Query, opt => opt.MapFrom(z => z.Question))
+                        .ForMember(x => x.LastUpdateOn, opt => opt.MapFrom(z => DateTime.Now));
+
+                    cfg.CreateMap<TagItem, TagModel>();
+                });
             mapper = configurationManager.CreateMapper();
         }
 
@@ -42,7 +45,10 @@ namespace TheSchool.Controllers
             //You need to call TagHelper.Process as shown below in order to populate the object "HomeViewModel".
             var model = new HomeViewModel();
             model.QA = new QuestionAndAnswerModel();
-            model.Tags = new TagCloudModel();
+            
+
+            var tagList = TagHelper.Process(KnowledgeBaseQuery, out int tagMaxCount);
+            model.Tags = new TagCloudModel() { Tags = mapper.Map<List<TagModel>>(tagList), MaxCount = tagMaxCount };
 
             return View("Index", model);
         }
@@ -54,11 +60,11 @@ namespace TheSchool.Controllers
         [HttpGet]
         public ActionResult TagCloud()
         {
-            //TODO: Return partival view "TagCloud" with an instance of TagCloudviewModel.
+            //TODO: Return partial view "TagCloud" with an instance of TagCloudviewModel.
             //You need to call TagHelper.Process as shown below.
-            
+
+            //TagHelper.Process()
             throw new NotImplementedException();
-            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
