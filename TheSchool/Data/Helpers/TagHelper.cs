@@ -16,6 +16,13 @@ namespace TheSchool.Data.Helpers
         public static List<Entities.TagItem> Process(List<Entities.KnowledgeBaseItem> items, out int tagMaxCount)
         {
             //TODO: Based on the list of items you need to rank tags dynamically. Also, return the max value that will be used for Tag Cloud control.
+            List<Entities.TagItem> itemList;
+
+            foreach (var tags in items)
+            {
+                
+            }
+            
             throw new NotImplementedException();
         }
     }

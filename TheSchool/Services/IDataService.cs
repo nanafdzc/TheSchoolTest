@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TheSchool.Entities;
 
 namespace TheSchool.Services
 {
@@ -12,5 +13,6 @@ namespace TheSchool.Services
         void Delete(int id);
 
         void CommitChanges();
+        KnowledgeBaseItem Get(int id);
     }
 }

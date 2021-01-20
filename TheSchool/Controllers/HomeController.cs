@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,30 +29,43 @@ namespace TheSchool.Controllers
             //Also create a map from TagItem to TagModel.
             //Use "mapper" attribute which is already defined. More information: https://docs.automapper.org/en/latest/Getting-started.html.
 
-            throw new NotImplementedException();
+            var config = new AutoMapper.MapperConfiguration(
+                cfg => {
+                    cfg.CreateMap<QuestionAndAnswerModel, Entities.KnowledgeBaseItem>()
+                .ForMember(x => x.Query, opt => opt.MapFrom(z => z.Question))
+                .ForMember(x => x.LastUpdateOn, opt => opt.MapFrom(z => DateTime.Now));
+                    cfg.CreateMap<TagItem, TagModel>();
+                 });
 
+            mapper = config.CreateMapper();
         }
 
         public ActionResult Index()
         {
             //TODO: Return a view "Index" with all the required information for the nested views.
             //You need to call TagHelper.Process as shown below in order to populate the object "HomeViewModel".
-            
-            throw new NotImplementedException();
+            var model = new HomeViewModel();
+            model.QA = new QuestionAndAnswerModel();
+          
+            var tagList = TagHelper.Process(KnowledgeBaseQuery, out int tagMaxCount);
+            model.Tags = new TagCloudModel() { Tags = mapper.Map<List<TagModel>>(tagList), MaxCount = tagMaxCount };
+
+            return View("Index", model);
         }
         public ActionResult Entry()
         {
-            //TODO: Return partival view "Entry";
-            throw new NotImplementedException();
+            //TODO: Return partial view "Entry";
+            return View("Entry");
         }
         [HttpGet]
         public ActionResult TagCloud()
         {
-            //TODO: Return partival view "TagCloud" with an instance of TagCloudviewModel.
+            //TODO: Return partial view "TagCloud" with an instance of TagCloudviewModel.
             //You need to call TagHelper.Process as shown below.
             
-            throw new NotImplementedException();
+     
             
+            return PartialView("TagCloud");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,8 +73,15 @@ namespace TheSchool.Controllers
         {
             //TODO: Return partial view "Index" to reload the page.
             //If model is valid then persists the new entry on DB. Make sure  data changes are committed.
-            
-            throw new NotImplementedException();
+            if (ViewData.ModelState.IsValid)
+            {
+                KnowledgeBaseItem baseItem = mapper.Map<KnowledgeBaseItem>(model);
+                KnowledgeBaseData.Add(baseItem);
+                KnowledgeBaseData.CommitChanges();
+
+                return Redirect("Index");
+            }
+            return Index();
         }
         public IActionResult Privacy()
         {
