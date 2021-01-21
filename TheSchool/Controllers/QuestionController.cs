@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using System;
+using TheSchool.Entities;
 using TheSchool.Models;
 
 namespace TheSchool.Controllers
@@ -13,19 +14,30 @@ namespace TheSchool.Controllers
 
         public QuestionController(Services.IDataService<Entities.KnowledgeBaseItem> knowledgeData, Services.IQueryService<Entities.KnowledgeBaseItem> knowledgeQuery)
         {
+            //TODO: Implement mapping as needed.
             KnowledgeData = knowledgeData;
             KnowledgeQuery = knowledgeQuery;
 
+            var config = new AutoMapper.MapperConfiguration(
+                cfg => {
+                    cfg.CreateMap<Entities.KnowledgeBaseItem, QuestionAndAnswerEditModel>()
+                    .ForMember(x => x.Question, opt => opt.MapFrom(z => z.Query));
+                    cfg.CreateMap<QuestionAndAnswerEditModel, KnowledgeBaseItem>()
+                    .ForMember(x => x.Query, opt => opt.MapFrom(z => z.Question));
+                    
+                });
 
-            //TODO: Implement mapping as needed.
-            throw new NotImplementedException();
-          
+            mapper = config.CreateMapper();
         }
         // GET: Question
         public ActionResult Edit(int id)
         {
             //TODO: Implement this method to retrieve and present data for Edition/Updates.
-            throw new NotImplementedException();
+            var item = KnowledgeData.Get(id);
+            var model = new QuestionAndAnswerEditModel();
+            model = mapper.Map<QuestionAndAnswerEditModel>(item);
+            
+            return View("Edit", model);
         }
 
         [HttpPost]
@@ -35,7 +47,9 @@ namespace TheSchool.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: Implement this part of code to persist changes into database.
-                throw new NotImplementedException();
+                var editedModel = mapper.Map<KnowledgeBaseItem>(model);
+                KnowledgeData.Edit(editedModel);
+                KnowledgeData.CommitChanges();
             }
             return View(model);
         }

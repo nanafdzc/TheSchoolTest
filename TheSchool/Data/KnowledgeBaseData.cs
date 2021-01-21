@@ -43,7 +43,15 @@ namespace TheSchool.Data
         {
             //TODO: Implement Editing mechanism for KnowledgeBaseItems.
             //This need to handle concurrency. As long as rowversions are the same then persist changes.
-            throw new NotImplementedException();
+            var original = Get(entity.Id);
+            if (original.RowVersion == entity.RowVersion)
+            {
+                original.Tags = entity.Tags;
+                original.Query = entity.Query;
+                original.Answer = entity.Answer;
+                original.LastUpdateOn = DateTime.Now;
+                CommitChanges();
+            }
         }
 
         public KnowledgeBaseItem Get(int id)
@@ -66,7 +74,7 @@ namespace TheSchool.Data
         public List<KnowledgeBaseItem> GetByFilter(Expression<Func<KnowledgeBaseItem, bool>> expression)
         {
             //TODO: Implement Getting by Filter mechanism for KnowledgeBaseItems.
-            throw new NotImplementedException();
+            return _context.KnowledgeBaseItems.Where(expression).ToList();
         }
 
         #endregion

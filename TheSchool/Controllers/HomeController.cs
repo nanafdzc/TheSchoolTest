@@ -55,16 +55,19 @@ namespace TheSchool.Controllers
         public ActionResult Entry()
         {
             //TODO: Return partial view "Entry";
-            return View("Entry");
+            return PartialView("Entry");
         }
         [HttpGet]
         public ActionResult TagCloud()
         {
             //TODO: Return partial view "TagCloud" with an instance of TagCloudviewModel.
             //You need to call TagHelper.Process as shown below.
-            
-     
-            
+            /*var tagCloud = new TagCloudModel();
+
+            var tagList = TagHelper.Process(KnowledgeBaseQuery, out int tagMaxCount);
+            tagCloud.Tags = mapper.Map<List<TagModel>>(tagList);
+            tagCloud.MaxCount = tagMaxCount;*/
+           
             return PartialView("TagCloud");
         }
         [HttpPost]
@@ -79,8 +82,9 @@ namespace TheSchool.Controllers
                 KnowledgeBaseData.Add(baseItem);
                 KnowledgeBaseData.CommitChanges();
 
-                return Redirect("Index");
+                return RedirectToRoute(new { action = "Index", controller = "Home", area = "" });
             }
+
             return Index();
         }
         public IActionResult Privacy()
