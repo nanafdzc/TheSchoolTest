@@ -62,13 +62,13 @@ namespace TheSchool.Controllers
         {
             //TODO: Return partial view "TagCloud" with an instance of TagCloudviewModel.
             //You need to call TagHelper.Process as shown below.
-            /*var tagCloud = new TagCloudModel();
-
+            var tagCloud = new TagCloudModel();
+           
             var tagList = TagHelper.Process(KnowledgeBaseQuery, out int tagMaxCount);
             tagCloud.Tags = mapper.Map<List<TagModel>>(tagList);
-            tagCloud.MaxCount = tagMaxCount;*/
-           
-            return PartialView("TagCloud");
+            tagCloud.MaxCount = tagMaxCount;
+
+            return PartialView("TagCloud", tagCloud);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,10 +82,10 @@ namespace TheSchool.Controllers
                 KnowledgeBaseData.Add(baseItem);
                 KnowledgeBaseData.CommitChanges();
 
-                return RedirectToRoute(new { action = "Index", controller = "Home", area = "" });
+                return RedirectToAction("Index","Home");
             }
 
-            return Index();
+            return RedirectToAction("Index","Home");
         }
         public IActionResult Privacy()
         {

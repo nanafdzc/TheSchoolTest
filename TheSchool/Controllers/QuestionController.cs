@@ -49,7 +49,7 @@ namespace TheSchool.Controllers
                 //TODO: Implement this part of code to persist changes into database.
                 var editedModel = mapper.Map<KnowledgeBaseItem>(model);
                 KnowledgeData.Edit(editedModel);
-                KnowledgeData.CommitChanges();
+
             }
             return View(model);
         }

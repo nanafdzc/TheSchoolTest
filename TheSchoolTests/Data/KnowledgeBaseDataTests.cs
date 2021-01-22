@@ -114,7 +114,7 @@ namespace TheSchoolTests.Data.Test
             }
         }
 
-        [TestMethod]
+        [TestMethod]]
         public void EditingConcurrent()
         {
             var entityA = GetItemUpdated(2, "A");

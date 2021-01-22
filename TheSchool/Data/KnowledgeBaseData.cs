@@ -44,7 +44,7 @@ namespace TheSchool.Data
             //TODO: Implement Editing mechanism for KnowledgeBaseItems.
             //This need to handle concurrency. As long as rowversions are the same then persist changes.
             var original = Get(entity.Id);
-            if (original.RowVersion == entity.RowVersion)
+            if (original.RowVersion.SequenceEqual(entity.RowVersion))
             {
                 original.Tags = entity.Tags;
                 original.Query = entity.Query;
