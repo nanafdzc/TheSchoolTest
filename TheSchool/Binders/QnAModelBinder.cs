@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-
+using TheSchool.Models;
 
 namespace TheSchool.Binders
 {
@@ -17,7 +17,32 @@ namespace TheSchool.Binders
         public static object BindQnAModel(IFormCollection values, ModelStateDictionary modelState)
         {
             //TODO: Implement model binder for QuestionAndAnswerModel
-            throw new NotImplementedException();
+
+            var model = new QuestionAndAnswerModel();
+            model.Answer = values["txtAnswer"];
+            model.Question = values["txtQuestion"];
+            model.Tags = values["txtTags"];
+
+            if (modelState.IsValid)
+            {
+                return model;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(model.Answer))
+                {
+                    modelState.AddModelError("Answer", "Empty answer");
+                }
+                if (string.IsNullOrEmpty(model.Question))
+                {
+                    modelState.AddModelError("Answer", "Empty question");
+                }
+                if (string.IsNullOrEmpty(model.Tags))
+                {
+                    modelState.AddModelError("Tags", "Empty tags");
+                }
+                return model;
+            }
         }
 
         public Task BindModelAsync(ModelBindingContext bindingContext)
