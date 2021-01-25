@@ -33,11 +33,12 @@ namespace TheSchool.Controllers
         public ActionResult Edit(int id)
         {
             //TODO: Implement this method to retrieve and present data for Edition/Updates.
-            var item = KnowledgeData.Get(id);
-            var model = new QuestionAndAnswerEditModel();
-            model = mapper.Map<QuestionAndAnswerEditModel>(item);
-            
-            return View("Edit", model);
+            var model = mapper.Map<QuestionAndAnswerEditModel>(KnowledgeQuery.Get(id));
+            if (model != null)
+            {
+                return View(model);
+            }
+            return Redirect("Error");
         }
 
         [HttpPost]
@@ -50,6 +51,7 @@ namespace TheSchool.Controllers
                 var editedModel = mapper.Map<KnowledgeBaseItem>(model);
                 KnowledgeData.Edit(editedModel);
 
+                return RedirectToAction("Index", "Home");
             }
             return View(model);
         }

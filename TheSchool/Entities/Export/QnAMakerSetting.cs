@@ -21,7 +21,13 @@ namespace TheSchool.Entities.Export
         {
             //TODO: Implement this method to write a text file on the folder and with the filename specified on the constructor.
             //write a line for each item in source using the following format... string.Format($"{item.Query}\\t{item.Answer}")
-            throw new NotImplementedException();
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\anavi\Desktop\TheSchoolTest\exportFile.txt");
+            foreach (var item in source)
+            {
+                var text = string.Format($"{item.Query}\\t{item.Answer}");
+                file.WriteLine(text);
+            }
+
         }
     }
 }

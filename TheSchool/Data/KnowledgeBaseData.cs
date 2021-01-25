@@ -50,6 +50,7 @@ namespace TheSchool.Data
                 original.Query = entity.Query;
                 original.Answer = entity.Answer;
                 original.LastUpdateOn = DateTime.Now;
+                original.RowVersion = entity.RowVersion;
                 CommitChanges();
             }
         }
