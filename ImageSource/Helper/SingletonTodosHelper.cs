@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -25,9 +26,20 @@ namespace ImageSource.Helper
             /////////////////////////////////////////////////////////////////////////////////////////////
             //TODO: Make your code changes here so we can keep the same reference value object all the time.
             //base.GetAll() should be called once irrespectively of how many instances of SingletonPhotoHelper 
-            //are created. You can change LocalCache definition.
-           
-            throw new NotImplementedException();
+            //are created. You can change LocalCache definition
+            
+            MemoryCache myCache = new MemoryCache(new MemoryCacheOptions());
+            
+            var helper = new CacheTodosHelper(RestClient, Serializer, myCache);
+            
+            if(_localCache == null)
+            {
+                _localCache = helper.GetAll();
+                _lock = _localCache;
+            }
+            
+            return (IQueryable < Todos >)_lock;
+            
             /////////////////////////////////////////////////////////////////////////////////////////////
         }
         

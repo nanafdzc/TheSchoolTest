@@ -29,7 +29,10 @@ namespace ImageSource
 
             /////////////////////////////////////////////////////////////////////////////////
             //TODO: Use Moq.Mocks as we want to use rawJason as data source, your code here..
-           
+            var mock = new Mock<IRestClient>();
+            mock.Setup(m => serializer.ToObject<Mock>(rawJson)).Returns(mock);
+
+
 
             throw new NotImplementedException();
             /////////////////////////////////////////////////////////////////////////////////
