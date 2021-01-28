@@ -31,14 +31,16 @@ namespace ImageSource.Helper
             MemoryCache myCache = new MemoryCache(new MemoryCacheOptions());
             
             var helper = new CacheTodosHelper(RestClient, Serializer, myCache);
-            
-            if(_localCache == null)
+
+            lock (_lock)
             {
-                _localCache = helper.GetAll();
-                _lock = _localCache;
+                if (_localCache == null)
+                {
+                    _localCache = helper.GetAll();
+                }
             }
-            
-            return (IQueryable < Todos >)_lock;
+
+            return (IQueryable < Todos >)_localCache;
             
             /////////////////////////////////////////////////////////////////////////////////////////////
         }

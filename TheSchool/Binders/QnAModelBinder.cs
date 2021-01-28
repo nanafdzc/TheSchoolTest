@@ -23,26 +23,22 @@ namespace TheSchool.Binders
             model.Question = values["txtQuestion"];
             model.Tags = values["txtTags"];
 
-            if (modelState.IsValid)
+            if (string.IsNullOrEmpty(model.Answer))
             {
-                return model;
+                modelState.AddModelError("Answer", "Empty answer");
             }
-            else
+            if (string.IsNullOrEmpty(model.Question))
             {
-                if (string.IsNullOrEmpty(model.Answer))
-                {
-                    modelState.AddModelError("Answer", "Empty answer");
-                }
-                if (string.IsNullOrEmpty(model.Question))
-                {
-                    modelState.AddModelError("Answer", "Empty question");
-                }
-                if (string.IsNullOrEmpty(model.Tags))
-                {
-                    modelState.AddModelError("Tags", "Empty tags");
-                }
-                return model;
+                modelState.AddModelError("Question", "Empty question");
+
             }
+            if (string.IsNullOrEmpty(model.Tags))
+            {
+                modelState.AddModelError("Tags", "Empty tags");
+            }
+
+            return model;
+
         }
 
         public Task BindModelAsync(ModelBindingContext bindingContext)

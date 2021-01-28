@@ -38,6 +38,19 @@ namespace TheSchool.Controllers
             {
                 return View(model);
             }
+            if (string.IsNullOrEmpty(model.Answer))
+            {
+                ViewData.ModelState.AddModelError("Answer", "Empty answer");
+            }
+            if (string.IsNullOrEmpty(model.Question))
+            {
+                ViewData.ModelState.AddModelError("Question", "Empty question");
+
+            }
+            if (string.IsNullOrEmpty(model.Tags))
+            {
+                ViewData.ModelState.AddModelError("Tags", "Empty tags");
+            }
             return Redirect("Error");
         }
 

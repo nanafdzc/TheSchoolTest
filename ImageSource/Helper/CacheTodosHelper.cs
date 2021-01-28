@@ -31,11 +31,13 @@ namespace ImageSource.Helper
             //are created. Implement MemoryCache to keep the results from base.GetAll() cached for 20 seconds.
             string key;
 
-            if(!_localCache.TryGetValue("key", out key))
+            lock (_lock)
             {
-                _lock = base.GetAll();
-
-                _localCache.Set("key", key, TimeSpan.FromSeconds(20));
+                if (!_localCache.TryGetValue("key", out key))
+                {
+                    _lock = base.GetAll();
+                    _localCache.Set("key", key, TimeSpan.FromSeconds(20));
+                }
             }
 
             return (IQueryable < Todos >) _lock;
