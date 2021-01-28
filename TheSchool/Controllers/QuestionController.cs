@@ -38,7 +38,7 @@ namespace TheSchool.Controllers
             {
                 return View(model);
             }
-            if (string.IsNullOrEmpty(model.Answer))
+            /*if (string.IsNullOrEmpty(model.Answer))
             {
                 ViewData.ModelState.AddModelError("Answer", "Empty answer");
             }
@@ -50,7 +50,7 @@ namespace TheSchool.Controllers
             if (string.IsNullOrEmpty(model.Tags))
             {
                 ViewData.ModelState.AddModelError("Tags", "Empty tags");
-            }
+            }*/
             return Redirect("Error");
         }
 

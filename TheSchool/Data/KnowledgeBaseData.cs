@@ -53,6 +53,10 @@ namespace TheSchool.Data
                 original.RowVersion = entity.RowVersion;
                 CommitChanges();
             }
+            else
+            {
+                throw new System.Data.Entity.Infrastructure.DbUpdateConcurrencyException();
+            }
         }
 
         public KnowledgeBaseItem Get(int id)
